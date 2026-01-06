@@ -6,6 +6,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+/* 🔝 TOP BAR */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 18px;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#fff;
+  border-radius:18px;
+  margin-bottom:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.18);
+}
+
+.topbar .brand{
+  font-size:18px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.logout-btn{
+  background:#ef4444;
+  border:none;
+  color:#fff;
+  padding:8px 16px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.logout-btn:hover{
+  background:#dc2626;
+  transform:scale(1.05);
+}
+
+  
 :root{
 --bg:#f1f5f9;--card:#fff;--pri:#2563eb;
 --danger:#dc2626;--success:#16a34a;
@@ -78,7 +120,16 @@ background:#fff;padding:18px;border-radius:16px;width:320px
 
 <body>
 
-<h2>📘 South Car Accessories – Business Ledger</h2>
+<!-- 🔓 TOP BAR -->
+<div class="topbar">
+  <div class="brand">
+    🚗 <span>South Car Accessories</span>
+  </div>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+  
+<h2> South Car Accessories – Business Ledger</h2>
 
 <!-- 🔍 DATE RANGE FILTER -->
 <div class="card">
@@ -317,7 +368,21 @@ function confirmDelete(){
   toastMsg("🗑️ Entry deleted successfully");
 }
 
+function logout(){
+  if(!confirm("Do you want to logout?")) return;
+
+  // clear session
+  localStorage.clear();
+  sessionStorage.clear();
+
+  // redirect to login page
+  window.location.href = "login.html";
+}
+
+
+  
 </script>
 
 </body>
 </html>
+
