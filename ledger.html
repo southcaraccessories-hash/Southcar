@@ -10,18 +10,23 @@
 /* 🔝 TOP BAR */
 .topbar{
   position:sticky;
-  top:0;
+  top:10px;
   z-index:1000;
+
+  max-width:1100px;     /* 🔹 controls width */
+  margin:0 auto 14px;   /* 🔹 center horizontally */
+
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:12px 18px;
+
   background:linear-gradient(135deg,#2563eb,#1e40af);
   color:#fff;
   border-radius:18px;
-  margin-bottom:14px;
   box-shadow:0 10px 25px rgba(0,0,0,.18);
 }
+
 
 .topbar .brand{
   font-size:18px;
@@ -385,4 +390,5 @@ function logout(){
 
 </body>
 </html>
+
 
