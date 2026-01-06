@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>South Car Accessories – Ledger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+--bg:#f1f5f9;--card:#fff;--pri:#2563eb;
+--danger:#dc2626;--success:#16a34a;
+--text:#1f2937;--muted:#6b7280;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:14px;font-family:Segoe UI;background:var(--bg)}
+h2{text-align:center;margin-bottom:10px}
+
+.card{
+background:#fff;padding:16px;border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.12);
+margin-bottom:16px
+}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+input,textarea{
+width:100%;padding:10px;border-radius:12px;
+border:1px solid #d1d5db;font-size:14px
+}
+textarea{resize:none}
+
+button{
+padding:8px 14px;border:none;border-radius:12px;
+background:var(--pri);color:#fff;font-weight:600;cursor:pointer
+}
+
+.btn-edit{background:#0ea5e9}
+.btn-del{background:#dc2626}
+
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #e5e7eb;font-size:13px}
+th{background:#f8fafc;font-size:12px;text-transform:uppercase}
+
+.pagination{
+display:flex;justify-content:center;gap:10px;margin-top:14px
+}
+.pagination button{background:#e5e7eb;color:#111}
+
+.summary{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px
+}
+.summary .card h4{
+margin:0;font-size:13px;color:var(--muted)
+}
+.summary .card p{
+margin-top:6px;font-size:22px;font-weight:700
+}
+
+.toast{
+position:fixed;top:20px;right:20px;
+padding:14px 20px;border-radius:16px;
+display:none;color:#fff;font-weight:600
+}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+
+.overlay{
+position:fixed;inset:0;background:rgba(0,0,0,.4);
+display:none;align-items:center;justify-content:center
+}
+.modal{
+background:#fff;padding:18px;border-radius:16px;width:320px
+}
+</style>
+</head>
+
+<body>
+
+<h2>📘 South Car Accessories – Business Ledger</h2>
+
+<!-- 🔍 DATE RANGE FILTER -->
+<div class="card">
+<div class="grid">
+<input type="date" id="fromDate">
+<input type="date" id="toDate">
+<button onclick="applyRange()">Apply Filter</button>
+<button onclick="clearRange()">Clear Filter</button>
+</div>
+</div>
+
+<!-- 📊 SUMMARY CARDS -->
+<div class="summary">
+<div class="card"><h4>💵 Cash Offline</h4><p id="cOff">₹0</p></div>
+<div class="card"><h4>💳 Cash Online</h4><p id="cOn">₹0</p></div>
+<div class="card"><h4>💰 Total Credit</h4><p id="cCredit">₹0</p></div>
+<div class="card"><h4>📉 Total Debit</h4><p id="cDebit">₹0</p></div>
+<div class="card"><h4>📈 Profit</h4><p id="cProfit">₹0</p></div>
+<div class="card"><h4>🏦 Balance</h4><p id="cBalance">₹0</p></div>
+</div>
+
+<!-- ➕ ADD ENTRY -->
+<div class="card">
+<h3>➕ Add Entry</h3>
+<div class="grid">
+<input type="date" id="date">
+<input placeholder="Item name" id="item">
+<input type="number" placeholder="Quantity" id="qty">
+<input type="number" placeholder="Cost price" id="cost">
+<input type="number" placeholder="Selling price" id="sell">
+<input type="number" placeholder="Cash Offline" id="cashOff">
+<input type="number" placeholder="Cash Online" id="cashOn">
+</div>
+<br>
+<textarea id="desc" placeholder="Description"></textarea>
+<br><br>
+<button onclick="save()">💾 Save Entry</button>
+</div>
+
+<!-- 📋 TABLE -->
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>#</th><th>Date</th><th>Item</th><th>Qty</th>
+<th>Offline</th><th>Online</th>
+<th>Debit</th><th>Credit</th><th>Profit</th><th>Action</th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+
+<div class="pagination">
+<button onclick="prevPage()">⬅ Prev</button>
+<span id="pageInfo"></span>
+<button onclick="nextPage()">Next ➡</button>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const URL="https://script.google.com/macros/s/AKfycbwCqMgIE7bI5FGrp2oZtTnR3dq1Xn2dkWAQSRjaWGnPqewApNkumHPPtv2iXXogrBm5/exec";
+
+let all=[],view=[],page=1,perPage=10;
+
+function toastMsg(m,t="success"){
+toast.innerText=m;
+toast.className="toast "+t;
+toast.style.display="block";
+setTimeout(()=>toast.style.display="none",2000);
+}
+
+function save(){
+if(!date.value||!item.value||!qty.value||!cost.value||!sell.value||!desc.value){
+toastMsg("All fields required","error");return;
+}
+
+const fd=new FormData();
+fd.append("action","add");
+fd.append("date",date.value);
+fd.append("item",item.value);
+fd.append("qty",qty.value);
+fd.append("cost",cost.value);
+fd.append("sell",sell.value);
+fd.append("cashOff",cashOff.value||0);
+fd.append("cashOn",cashOn.value||0);
+fd.append("debit",qty.value*cost.value);
+fd.append("credit",(+cashOff.value||0)+(+cashOn.value||0));
+fd.append("profit",(sell.value-cost.value)*qty.value);
+fd.append("desc",desc.value);
+
+fetch(URL,{method:"POST",mode:"no-cors",body:fd});
+toastMsg("Data saved – South Car Accessories 💾");
+document.querySelectorAll("input,textarea").forEach(i=>i.value="");
+load();
+}
+
+function load(){
+fetch(URL).then(r=>r.json()).then(d=>{
+all=d.reverse();
+view=[...all];
+page=1;
+render();
+calcCards();
+});
+}
+
+function applyRange(){
+const f=new Date(fromDate.value);
+const t=new Date(toDate.value);
+view=all.filter(r=>{
+const d=new Date(r.date);
+return (!fromDate.value||d>=f)&&(!toDate.value||d<=t);
+});
+page=1;
+render();
+calcCards();
+}
+
+function clearRange(){
+fromDate.value="";toDate.value="";
+view=[...all];
+page=1;
+render();
+calcCards();
+}
+
+function calcCards(){
+let off=0,on=0,deb=0,cre=0,pro=0;
+view.forEach(r=>{
+off+=+r.cashOff;on+=+r.cashOn;
+deb+=+r.debit;cre+=+r.credit;pro+=+r.profit;
+});
+cOff.innerText="₹"+off;
+cOn.innerText="₹"+on;
+cDebit.innerText="₹"+deb;
+cCredit.innerText="₹"+cre;
+cProfit.innerText="₹"+pro;
+cBalance.innerText="₹"+(cre-deb);
+}
+
+function render(){
+tbody.innerHTML="";
+const start=(page-1)*perPage;
+view.slice(start,start+perPage).forEach((r,i)=>{
+tbody.innerHTML+=`
+<tr>
+<td>${start+i+1}</td>
+<td>${r.date}</td><td>${r.item}</td><td>${r.qty}</td>
+<td>${r.cashOff}</td><td>${r.cashOn}</td>
+<td>${r.debit}</td><td>${r.credit}</td><td>${r.profit}</td>
+<td>
+<button class="btn-edit" onclick="openEdit(${start+i})">✏️</button>
+<button class="btn-del" onclick="openDelete(${start+i})">🗑️</button>
+
+</td>
+</tr>`;
+});
+pageInfo.innerText=`Page ${page} / ${Math.ceil(view.length/perPage)||1}`;
+}
+
+function nextPage(){if(page*perPage<view.length){page++;render();}}
+function prevPage(){if(page>1){page--;render();}}
+
+load();
+
+
+
+
+
+let editIndex = null;
+let deleteIndex = null;
+
+/* ---------- EDIT ---------- */
+function openEdit(i){
+  editIndex = i;
+  const r = view[i];
+
+  eDate.value = r.date;
+  eItem.value = r.item;
+  eQty.value = r.qty;
+  eCost.value = r.cost;
+  eSell.value = r.sell;
+  eOff.value = r.cashOff;
+  eOn.value = r.cashOn;
+  eDesc.value = r.desc;
+
+  document.getElementById("editOverlay").style.display = "flex";
+}
+
+function closeEdit(){
+  document.getElementById("editOverlay").style.display = "none";
+}
+
+function updateEntry(){
+  const r = view[editIndex];
+
+  r.date = eDate.value;
+  r.item = eItem.value;
+  r.qty = +eQty.value;
+  r.cost = +eCost.value;
+  r.sell = +eSell.value;
+  r.cashOff = +eOff.value || 0;
+  r.cashOn = +eOn.value || 0;
+  r.debit = r.qty * r.cost;
+  r.credit = r.cashOff + r.cashOn;
+  r.profit = (r.sell - r.cost) * r.qty;
+  r.desc = eDesc.value;
+
+  render();
+  calcCards();
+  closeEdit();
+  toastMsg("✏️ Entry updated successfully");
+}
+
+/* ---------- DELETE ---------- */
+function openDelete(i){
+  deleteIndex = i;
+  document.getElementById("delOverlay").style.display = "flex";
+}
+
+function closeDelete(){
+  document.getElementById("delOverlay").style.display = "none";
+}
+
+function confirmDelete(){
+  const record = view[deleteIndex];
+
+  all = all.filter(r => r !== record);
+  view.splice(deleteIndex,1);
+
+  render();
+  calcCards();
+  closeDelete();
+  toastMsg("🗑️ Entry deleted successfully");
+}
+
+</script>
+
+</body>
+</html>
