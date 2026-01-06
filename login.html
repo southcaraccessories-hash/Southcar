@@ -119,6 +119,18 @@ button.success{
 }
 
 .footer{text-align:center;font-size:12px;color:#777;margin-top:18px}
+
+  .back-btn{
+  margin-top:12px;
+  background:transparent;
+  border:2px solid var(--green2);
+  color:var(--green2);
+}
+.back-btn:hover{
+  background:var(--green2);
+  color:#fff;
+}
+
 </style>
 </head>
 
@@ -200,7 +212,15 @@ async function login(){
     setTimeout(()=>box.classList.remove("shake"),300);
   }
 }
+function goHome(){
+  window.location.href = "index.html";
+}
+
+  
 </script>
+<button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+<button id="btn" onclick="login()">Login</button>
 
 </body>
 </html>
+
