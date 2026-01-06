@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | South Car Accessories</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#22c55e;
+  --card:#ffffff;
+  --text:#1f2937;
+  --green:#16a34a;
+  --green2:#22c55e;
+  --red:#dc2626;
+}
+body.dark{
+  --bg:#0f172a;
+  --card:#020617;
+  --text:#e5e7eb;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,var(--bg),#16a34a);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+
+.toggle-dark{
+  position:fixed;
+  top:15px;
+  right:20px;
+  background:rgba(255,255,255,.2);
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.login-box{
+  width:340px;
+  background:var(--card);
+  color:var(--text);
+  border-radius:20px;
+  padding:32px;
+  box-shadow:0 25px 60px rgba(0,0,0,.35);
+  animation:fadeUp .6s ease;
+  transition:.3s;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h2{text-align:center;margin:0}
+p{text-align:center;color:#777;font-size:13px}
+
+.field{position:relative;margin-bottom:14px}
+input{
+  width:100%;
+  padding:13px 44px 13px 14px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  background:transparent;
+  color:var(--text);
+}
+input:focus{
+  outline:none;
+  border-color:var(--green2);
+}
+.toggle-pass{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+button{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--green2),var(--green));
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+button.success{
+  background:#16a34a;
+  box-shadow:0 0 20px #22c55e;
+  transform:scale(1.05);
+}
+
+.error{
+  color:var(--red);
+  font-size:13px;
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+.shake{animation:shake .3s}
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
+}
+
+.footer{text-align:center;font-size:12px;color:#777;margin-top:18px}
+</style>
+</head>
+
+<body>
+
+<div class="toggle-dark" onclick="toggleDark()">🌙</div>
+
+<div class="login-box" id="box">
+  <h2>🔐 Login</h2>
+  <p>South Car Accessories</p>
+
+  <div class="field">
+    <input id="user" placeholder="Username">
+  </div>
+
+  <div class="field">
+    <input id="pass" type="password" placeholder="Password">
+    <span class="toggle-pass" onclick="togglePass()">👁️</span>
+  </div>
+
+  <button id="btn" onclick="login()">Login</button>
+  <div class="error" id="error">❌ Invalid credentials</div>
+
+  <div class="footer">© 2024 South Car Accessories</div>
+</div>
+
+<script>
+// 🔐 SHA-256 ENCRYPTION FUNCTION
+async function sha256(text){
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/*
+ENCRYPTED CREDENTIALS
+Username: Bhatdug
+Password: south123
+*/
+const USER_HASH = "d40a3b7403f21341c8a3e6ef7b97fc4a5dd03e112fc34c7f4017e32c47dc69f0";
+const PASS_HASH = "2d4d6e4bf44f26816c9631a5453277e9618085060f6283d2a0bd3ab101fb0ba2";
+
+
+// Restore dark mode
+if(localStorage.getItem("dark")==="1") document.body.classList.add("dark");
+
+// Enter key login
+document.addEventListener("keydown",e=>e.key==="Enter"&&login());
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("dark",document.body.classList.contains("dark")?"1":"0");
+}
+
+function togglePass(){
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+async function login(){
+  const btn = document.getElementById("btn");
+  const err = document.getElementById("error");
+
+  const userHash = await sha256(user.value);
+  const passHash = await sha256(pass.value);
+
+  if(userHash === USER_HASH && passHash === PASS_HASH){
+    btn.classList.add("success");
+    btn.innerHTML = "✔ Success";
+    setTimeout(()=>{
+      localStorage.setItem("loggedIn","yes");
+      window.location.replace("dohuk.html");
+    },700);
+  } else {
+    err.style.display="block";
+    box.classList.add("shake");
+    setTimeout(()=>box.classList.remove("shake"),300);
+  }
+}
+</script>
+
+</body>
+</html>

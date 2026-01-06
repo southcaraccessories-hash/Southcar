@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>South Car Accessories Dohuk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* LOGOUT BUTTON */
+.top-bar{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:10px;
+}
+.logout-btn{
+  background:#ef4444;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+.logout-btn:hover{
+  filter:brightness(.95);
+}
+
+
+:root{
+  --bg:#eef2f7;--card:#fff;--pri:#2563eb;
+  --danger:#ef4444;--success:#16a34a;
+  --text:#1f2937;--muted:#6b7280;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;padding:14px;font-family:"Segoe UI",Arial;
+  background:linear-gradient(135deg,#eef2f7,#e6ebf5);
+  color:var(--text);
+}
+h2{text-align:center;margin:10px 0 16px}
+
+/* CARDS */
+.card-wrap{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;margin-bottom:18px;
+}
+.card{
+  background:#fff;padding:16px;border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+.card h3{margin:0;font-size:13px;color:var(--muted)}
+.card p{margin-top:6px;font-size:24px;font-weight:700}
+
+/* BOXES */
+form,.box{
+  background:#fff;padding:16px;border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  margin-bottom:18px;
+}
+input,select{
+  width:100%;padding:10px;margin-top:8px;
+  border-radius:10px;border:1px solid #d1d5db;
+}
+button{
+  border:none;border-radius:12px;
+  padding:10px 14px;font-weight:600;
+  cursor:pointer;
+}
+.btn{background:var(--pri);color:#fff}
+.btn-edit{background:#f59e0b;color:#fff;padding:5px 8px;border-radius:8px}
+.btn-del{background:var(--danger);color:#fff;padding:5px 8px;border-radius:8px}
+
+/* TABLE */
+.table-scroll{overflow-x:auto;border-radius:14px}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff}
+thead th{
+  position:sticky;top:0;
+  background:#f1f5f9;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  border-bottom:2px solid #e5e7eb;
+}
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid #e5e7eb;
+  font-size:13px;
+  white-space:nowrap;
+}
+th:nth-child(1),td:nth-child(1){text-align:center}
+th:nth-child(5),td:nth-child(5){text-align:center}
+th:nth-child(6),td:nth-child(6){text-align:right;font-weight:600}
+th:nth-child(8),td:nth-child(8){text-align:center}
+
+/* Row colors */
+tr.cash-row{background:#ecfdf5}
+tr.online-row{background:#eff6ff}
+tbody tr:hover{filter:brightness(.98)}
+
+/* PAGINATION */
+.pagination{text-align:center;margin-top:12px}
+.pagination button{
+  padding:6px 10px;margin:2px;
+  border-radius:8px;border:none;
+  background:#e5e7eb;cursor:pointer;
+}
+.pagination button.active{background:var(--pri);color:#fff}
+
+/* MODAL */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;
+}
+.modal{
+  background:#fff;padding:18px;border-radius:16px;width:320px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;top:18px;right:18px;
+  background:var(--success);color:#fff;
+  padding:14px 20px;border-radius:14px;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+<div class="top-bar">
+  <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+</div>
+
+
+<h2>Daily South Car Accessories Balance</h2>
+
+<div class="card-wrap">
+  <div class="card"><h3>Cash at Shop</h3><p id="cashShop">₹0</p></div>
+  <div class="card"><h3>Cash at Bank</h3><p id="cashBank">₹0</p></div>
+  <div class="card"><h3>Total</h3><p id="cashTotal">₹0</p></div>
+</div>
+
+<form id="dohukForm"
+ action="https://script.google.com/macros/s/AKfycbwVTEanXJu9Ql7bDNi4C2vfanIHAIw6kA_fiGjY4QyqXrh-ySTJB0dX00t6rRDVaEYJ/exec"
+ method="POST"
+ onsubmit="handleSubmit(event)">
+  <input type="date" name="date" required>
+  <input name="id" placeholder="ID" required>
+  <input name="customer" placeholder="Customer Name" required>
+  <input name="product" placeholder="Product" required>
+  <select name="mode"><option>Cash</option><option>Online</option></select>
+  <input type="number" name="amount" placeholder="Amount" required>
+  <input name="desc" placeholder="Description">
+  <button class="btn">💾 Save Entry</button>
+</form>
+
+<div class="box">
+<input type="search" placeholder="🔍 Search entries..." oninput="searchTable(this.value)">
+<select onchange="applyFilter(this.value)">
+  <option value="all">All</option>
+  <option value="today">Today</option>
+  <option value="month">This Month</option>
+  <option value="year">This Year</option>
+</select>
+
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Date</th><th>ID</th><th>Name</th><th>Product</th>
+<th>Mode</th><th>Amount</th><th>Description</th><th>Action</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<div class="pagination" id="pagination"></div>
+</div>
+
+<div class="overlay" id="editBox">
+  <div class="modal">
+    <h3>Edit Entry</h3>
+    <input id="e_date"><input id="e_id">
+    <input id="e_customer"><input id="e_product">
+    <input id="e_amount" type="number"><input id="e_desc">
+    <button class="btn" onclick="saveEdit()">Update</button>
+    <button onclick="editBox.style.display='none'">Cancel</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const URL="https://script.google.com/macros/s/AKfycbwVTEanXJu9Ql7bDNi4C2vfanIHAIw6kA_fiGjY4QyqXrh-ySTJB0dX00t6rRDVaEYJ/exec";
+let allRows=[],rows=[],editRow=null,page=1,perPage=5,activeFilter="all";
+
+function showToast(m){toast.innerText=m;toast.style.display="block";setTimeout(()=>toast.style.display="none",2000)}
+
+function load(){
+  fetch(URL+"?action=read").then(r=>r.json()).then(d=>{
+    allRows=d;filterAndRender();
+  });
+}
+
+function applyFilter(t){activeFilter=t;filterAndRender()}
+
+function filterAndRender(search=""){
+  const now=new Date();
+  rows=allRows.filter(r=>{
+    const d=new Date(r.date);
+    if(activeFilter==="today" && d.toDateString()!==now.toDateString()) return false;
+    if(activeFilter==="month" && (d.getMonth()!==now.getMonth()||d.getFullYear()!==now.getFullYear())) return false;
+    if(activeFilter==="year" && d.getFullYear()!==now.getFullYear()) return false;
+    if(search) return Object.values(r).some(v=>String(v).toLowerCase().includes(search.toLowerCase()));
+    return true;
+  });
+  page=1;render();calcCards();
+}
+
+function searchTable(t){filterAndRender(t)}
+
+function calcCards(){
+  let c=0,b=0;
+  rows.forEach(r=>r.mode==="Cash"?c+=+r.amount:b+=+r.amount);
+  cashShop.innerText="₹"+c;
+  cashBank.innerText="₹"+b;
+  cashTotal.innerText="₹"+(c+b);
+}
+
+function render(){
+  tableBody.innerHTML="";
+  rows.slice((page-1)*perPage,page*perPage).forEach(r=>{
+    const cls=r.mode==="Cash"?"cash-row":"online-row";
+    tableBody.innerHTML+=`
+    <tr class="${cls}">
+      <td>${r.date}</td><td>${r.id}</td><td>${r.customer}</td>
+      <td>${r.product}</td><td>${r.mode}</td>
+      <td>₹${Number(r.amount).toLocaleString("en-IN")}</td>
+      <td>${r.desc}</td>
+      <td>
+        <button class="btn-edit" onclick="edit('${r.row}')">✏️</button>
+        <button class="btn-del" onclick="del('${r.row}')">🗑️</button>
+      </td>
+    </tr>`;
+  });
+  renderPagination();
+}
+
+function renderPagination(){
+  pagination.innerHTML="";
+  for(let i=1;i<=Math.ceil(rows.length/perPage);i++)
+    pagination.innerHTML+=`<button class="${i===page?'active':''}" onclick="page=${i};render()">${i}</button>`;
+}
+
+function edit(row){
+  const r=allRows.find(x=>x.row==row);
+  editRow=row;
+  e_date.value=r.date;e_id.value=r.id;
+  e_customer.value=r.customer;e_product.value=r.product;
+  e_amount.value=r.amount;e_desc.value=r.desc;
+  editBox.style.display="flex";
+}
+
+function saveEdit(){
+  fetch(`${URL}?action=update&row=${editRow}&date=${e_date.value}&id=${e_id.value}&customer=${e_customer.value}&product=${e_product.value}&amount=${e_amount.value}&desc=${e_desc.value}`)
+  .then(()=>{editBox.style.display="none";showToast("✏️ Updated");load();});
+}
+
+function del(row){
+  if(!confirm("Delete entry?"))return;
+  fetch(URL+`?action=delete&row=${row}`).then(()=>{showToast("🗑️ Deleted");load();});
+}
+
+function handleSubmit(e){
+  e.preventDefault();
+  fetch(dohukForm.action,{method:"POST",body:new FormData(dohukForm)})
+  .then(()=>{showToast("✅ Saved successfully");dohukForm.reset();setTimeout(load,800);});
+}
+
+load();
+
+function logout(){
+  if(!confirm("Do you want to logout?")) return;
+  localStorage.clear();     // clears login/session data
+  sessionStorage.clear();
+  window.location.href="login.html"; // change if your login page name is different
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Car Accessories & Spare Parts</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f8f9fa;
+}
+
+/* HEADER */
+header{
+    background:#343a40;
+    color:#fff;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#f4f6f8 !important;
+}
+.navbar-nav .nav-link{
+    margin-left:10px;
+    padding:6px 14px;
+    font-weight:600;
+    font-size:14px;
+    color:green !important;
+    border-radius:20px;
+    transition:0.3s;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.navbar-nav .nav-link:hover{
+    background:linear-gradient(90deg,#ff0000,#ff9800,#ffeb3b,#4caf50,#2196f3,#9c27b0);
+    color:#fff !important;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+.navbar-nav .active .nav-link{
+    background:#343a40;
+}
+
+/* BLINKING BADGE */
+@keyframes blink{
+    0%,100%{opacity:1;}
+    50%{opacity:0.3;}
+}
+.new-badge{
+    animation:blink 1.2s infinite;
+    padding:3px 8px;
+    font-size:11px;
+    font-weight:bold;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff0000,#ff9800,#ffeb3b,#4caf50,#2196f3,#9c27b0);
+    color:#fff;
+}
+
+/* CARDS */
+.card{
+    transition:0.2s;
+}
+.card:hover{
+    transform:scale(1.05);
+}
+.small-card img{
+    transition:0.3s;
+}
+.small-card:hover img{
+    transform:scale(1.1);
+}
+
+/* FOOTER */
+footer{
+    background:#343a40;
+    color:#fff;
+    text-align:center;
+    padding:8px;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    font-size:13px;
+    z-index:1000;
+}
+main{
+    margin-bottom:110px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="py-3">
+<div class="container">
+<div class="row align-items-center">
+    <div class="col-md-2 text-center">
+        <img src="https://i.imgur.com/kGj9sK2.jpg" width="70" class="img-fluid">
+    </div>
+    <div class="col-md-10 text-center text-md-left">
+        <h4 class="mb-0">South Car Accessories & Spare Parts</h4>
+    </div>
+</div>
+</div>
+</header>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+<div class="container">
+
+<div class="d-flex align-items-center">
+    <a href="https://www.facebook.com/xsimbhat123?mibextid=ZbWKwL" class="mr-3">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" width="22"></a> <span class="new-badge">Watch Latest Video's </span>
+    <span style="display:inline-block;width:15px;"></span>
+
+    <a href="https://www.youtube.com/@southcaraccessories" class="mr-3">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" width="45"></a> <span class="new-badge">Subscribe</span>
+   
+</div>
+
+
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="#home">🏠 Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#products">🛒 Products <span class="new-badge">NEW</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#contact">📞 Contact</a>
+    </li>
+</ul>
+
+</div>
+<li class="nav-item">
+<a class="nav-link" href="login.html">🔐 Login</a>
+</li>
+</nav>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/917006269622" target="_blank"
+style="position:fixed;bottom:70px;right:20px;background:#25D366;color:white;
+padding:12px 18px;border-radius:30px;text-decoration:none;
+display:flex;align-items:center;gap:8px;
+box-shadow:0 4px 8px rgba(0,0,0,0.3);z-index:999;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="22">
+Chat with Us
+</a>
+
+<a href="https://maps.app.goo.gl/eWRQUDDQRgWgs68D8" target="_blank"
+style="position:fixed;bottom:130px;right:20px;background:#d32f2f;color:white;
+padding:12px 18px;border-radius:30px;text-decoration:none;
+box-shadow:0 4px 8px rgba(0,0,0,0.3);z-index:999;">
+📍 Get Directions
+</a>
+
+<!-- MAIN -->
+<main class="container my-4">
+
+<section id="home" class="text-center mb-4">
+<h4>Welcome to South Car Accessories & Spare Parts</h4>
+</section>
+
+<section class="mb-4">
+<div class="row">
+    <div class="col-md-4 small-card"><img src="https://i.imgur.com/6zE4kBd.jpg" class="img-fluid"></div>
+    <div class="col-md-4 small-card"><img src="https://i.imgur.com/g8XUQ6e.jpg" class="img-fluid"></div>
+    <div class="col-md-4 small-card"><img src="https://i.imgur.com/L0XulWF.jpg" class="img-fluid"></div>
+</div>
+</section>
+
+<section id="products">
+<h4 class="text-center mb-4">Our Products and Accessories</h4>
+<div class="row" id="product-cards-container"></div>
+
+</section>
+
+<section id="contact" class="my-4 text-center">
+<h4>Contact & Location</h4>
+<p>📞 7006269622 | 6005926106</p>
+<p>✉ <a href="mailto:Southcaraccessories@gmail.com">Southcaraccessories@gmail.com</a></p>
+
+<iframe 
+  src="https://www.google.com/maps?q=https://maps.app.goo.gl/eWRQUDDQRgWgs68D8&output=embed"
+  width="100%" 
+  height="300" 
+  style="border:0;border-radius:10px;"
+  loading="lazy">
+</iframe>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+KP Road Anantnag J&K 192125 |
+© 2024 South Car Accessories |
+<small>Developed by devang</small>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+<script>
+const products=[
+{name:'Car Cover',desc:'Waterproof Car Cover',img:'https://i.imgur.com/yeXSCBZ.jpg'},
+{name:'Car Seat Cover',desc:'Universal Seat Cover',img:'https://i.imgur.com/jqB17vY.jpg'},
+{name:'Phone Holder',desc:'Car Mobile Holder',img:'https://i.imgur.com/ZYg6t1t.jpg'}
+
+];
+const c=document.getElementById('product-cards-container');
+products.forEach(p=>{
+c.innerHTML+=`
+<div class="col-md-4 mb-4">
+<div class="card">
+<img src="${p.img}" class="card-img-top">
+<div class="card-body">
+<h5>${p.name}</h5>
+<p>${p.desc}</p>
+</div>
+</div>
+</div>`;
+});
+</script>
+
+<!-- Glass Popup Overlay -->
+<div id="popupOverlay" style="
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+">
+
+    <div style="
+        width:360px;
+        padding:40px 30px;
+        border-radius:22px;
+        background:rgba(255,255,255,0.15);
+        backdrop-filter:blur(18px);
+        box-shadow:0 25px 60px rgba(0,0,0,0.35);
+        text-align:center;
+        border:1px solid rgba(255,255,255,0.25);
+        animation:zoomIn 0.6s ease;
+    ">
+
+        <!--<img src="https://drive.google.com/file/d/1dQQEHMWSSrAYCLkSXJpM5tOz-5ZCPhkC/view?usp=sharing" style="width:80px;margin-bottom:14px;"> -->
+
+        <h3 style="color:#fff;margin-bottom:22px;font-weight:600;">
+          Loading </br> Please Wait
+        </h3>
+
+        <div style="position:relative;width:130px;height:130px;margin:auto;">
+            <svg width="130" height="130">
+                <circle cx="65" cy="65" r="58"
+                        stroke="rgba(255,255,255,0.2)"
+                        stroke-width="8" fill="none"/>
+                <circle id="progressCircle"
+                        cx="65" cy="65" r="58"
+                        stroke="url(#grad)"
+                        stroke-width="8"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-dasharray="364"
+                        stroke-dashoffset="0"
+                        transform="rotate(-90 65 65)"/>
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00f2ff"/>
+                        <stop offset="100%" stop-color="#8b5cf6"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <div id="timer" style="
+                position:absolute;
+                inset:0;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:34px;
+                font-weight:700;
+                background:linear-gradient(135deg,#00f2ff,#8b5cf6);
+                -webkit-background-clip:text;
+                -webkit-text-fill-color:transparent;
+                animation:gradientFlow 2s infinite linear;
+            ">5</div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* SOFT INTRO SOUND (Web Audio API) */
+function playSoftChime() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = 880; // soft chime frequency
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.9);
+}
+
+/* TIMER */
+let time = 5;
+const total = 364;
+const circle = document.getElementById("progressCircle");
+const timer = document.getElementById("timer");
+
+/* Play sound once popup appears */
+playSoftChime();
+
+const interval = setInterval(() => {
+    time--;
+    timer.textContent = time;
+    circle.style.strokeDashoffset = total - (time / 5) * total;
+
+    if (time <= 0) {
+        clearInterval(interval);
+        document.getElementById("popupOverlay").style.display = "none";
+    }
+}, 1000);
+</script>
+
+<style>
+@keyframes zoomIn {
+    from {opacity:0; transform:scale(0.85);}
+    to {opacity:1; transform:scale(1);}
+}
+@keyframes gradientFlow {
+    0% {filter:hue-rotate(0deg);}
+    100% {filter:hue-rotate(360deg);}
+}
+</style>
+
+
+
+<button onclick="openOrderForm()" style="
+    position:fixed;
+    bottom:50px;
+    right:1350px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:white;
+    padding:14px 26px;
+    border:none;
+    border-radius:40px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    z-index:10000;
+    box-shadow:0 12px 30px rgba(0,0,0,0.35);
+">
+🛒 Place Order
+</button>
+
+<div id="orderPopup" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(6px);
+    z-index:10001;
+    align-items:center;
+    justify-content:center;
+">
+
+    <div style="
+        width:380px;
+        background:#ffffff;
+        padding:26px;
+        border-radius:18px;
+        box-shadow:0 25px 60px rgba(0,0,0,0.4);
+    ">
+
+        <h3 style="margin-bottom:14px;">🛒 Place Your Order</h3>
+
+        <input id="name" placeholder="Your Name"
+               style="width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc;">
+
+        <input id="phone" placeholder="Mobile Number"
+               style="width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc;">
+
+        <input id="product" placeholder="Product Name"
+               style="width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc;">
+
+        <textarea id="address" placeholder="Delivery Address"
+                  style="width:100%;padding:12px;margin-bottom:14px;border-radius:8px;border:1px solid #ccc;"></textarea>
+
+        <button onclick="sendOrder()" style="
+            width:100%;
+            background:#22c55e;
+            color:white;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            font-size:16px;
+            font-weight:600;
+        ">
+            📦 Submit Order
+        </button>
+
+        <p onclick="closeOrderForm()" style="
+            text-align:center;
+            margin-top:12px;
+            cursor:pointer;
+            color:#555;
+        ">Cancel</p>
+    </div>
+</div>
+<script>
+function openOrderForm() {
+    document.getElementById("orderPopup").style.display = "flex";
+}
+
+function closeOrderForm() {
+    document.getElementById("orderPopup").style.display = "none";
+}
+
+function sendOrder() {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const product = document.getElementById("product").value;
+    const address = document.getElementById("address").value;
+
+    if (!name || !phone || !product) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    const message =
+        `New Order%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Product: ${product}%0A
+Address: ${address}`;
+
+    window.open(
+        "https://wa.me/917006869622?text=" + message,
+        "_blank"
+    );
+}
+</script>
+
+</body>
+</html>
