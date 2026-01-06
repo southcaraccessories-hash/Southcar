@@ -170,8 +170,6 @@ async function sha256(text){
 
 /*
 ENCRYPTED CREDENTIALS
-Username: Bhatdug
-Password: south123
 */
 const USER_HASH = "d40a3b7403f21341c8a3e6ef7b97fc4a5dd03e112fc34c7f4017e32c47dc69f0";
 const PASS_HASH = "2d4d6e4bf44f26816c9631a5453277e9618085060f6283d2a0bd3ab101fb0ba2";
@@ -204,7 +202,7 @@ async function login(){
     btn.innerHTML = "✔ Success";
     setTimeout(()=>{
       localStorage.setItem("loggedIn","yes");
-      window.location.replace("dohuk.html");
+      window.location.replace("ledger.html");
     },700);
   } else {
     err.style.display="block";
@@ -221,6 +219,7 @@ function goHome(){
   
 </body>
 </html>
+
 
 
 
