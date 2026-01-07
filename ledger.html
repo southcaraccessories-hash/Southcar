@@ -313,7 +313,7 @@ button{
 <div class="toast" id="toast"></div>
 
 <script>
-const URL="https://script.google.com/macros/s/AKfycbyzqYJPBd0__kvY7XLlql3f_leptsmJxQEa9utGPOUEJrBQACQPAqqoQqbblX92thK2/exec";
+const URL="https://script.google.com/macros/s/AKfycbxJtt4zwBgNaUyUSKPsALrfD67Ygq-9Xz253iEqi6TSFLoBGsyYeuS_9dAH2VuvVlZD/exec";
 
 let all=[],view=[],page=1,perPage=10;
 
@@ -335,8 +335,6 @@ function save(){
 if(!date.value||!item.value||!qty.value||!cost.value||!sell.value||!desc.value){
 toastMsg("All fields required","error");return;
 }
-const uid = Date.now(); // unique id
-fd.append("id", uid);
 
 const fd=new FormData();
 fd.append("action","add");
@@ -478,26 +476,24 @@ function updateEntry(){
 
 /* ---------- DELETE ---------- */
 function openDelete(i){
-  const record = view[i];
+  deleteIndex = i;
+  document.getElementById("delOverlay").style.display = "flex";
+}
 
-  if(!confirm("Delete this entry permanently?")) return;
+function closeDelete(){
+  document.getElementById("delOverlay").style.display = "none";
+}
 
-  // 🔴 BACKEND DELETE
-  const fd = new FormData();
-  fd.append("action","delete");
-  fd.append("id", record.id);
+function confirmDelete(){
+  const record = view[deleteIndex];
 
-  fetch(URL,{method:"POST",mode:"no-cors",body:fd});
-
-  // 🟢 FRONTEND DELETE
-  all = all.filter(r => r.id !== record.id);
-  view = view.filter(r => r.id !== record.id);
+  all = all.filter(r => r !== record);
+  view.splice(deleteIndex,1);
 
   render();
   calcCards();
+  closeDelete();
   toastMsg("🗑️ Entry deleted successfully");
-}
-
 }
 
 function logout(){
@@ -517,7 +513,6 @@ function logout(){
 
 </body>
 </html>
-
 
 
 
