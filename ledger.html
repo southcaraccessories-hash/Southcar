@@ -313,7 +313,7 @@ button{
 <div class="toast" id="toast"></div>
 
 <script>
-const URL="https://script.google.com/macros/s/AKfycbzkhsc1_IMpqcGAemvq8Ax-Frb2rnbX-6WQkLWQDwYejNGLImIWEBfUmTtXjLs_UNm6/exec";
+const URL="https://script.google.com/macros/s/AKfycbxoHlOqf7E0I6CuQfkHmscKKBkQiBzmrYYhtORFJuX0eAwYuxgZOCXNnfXBlvrx_W-S/exec";
 
 let all=[],view=[],page=1,perPage=10;
 
@@ -349,9 +349,6 @@ fd.append("debit",qty.value*cost.value);
 fd.append("credit",(+cashOff.value||0)+(+cashOn.value||0));
 fd.append("profit",(sell.value-cost.value)*qty.value);
 fd.append("desc",desc.value);
-  
-const uid = Date.now(); // unique id
-fd.append("id", uid);
 
 fetch(URL,{method:"POST",mode:"no-cors",body:fd});
 toastMsg("Data saved – South Car Accessories 💾");
@@ -480,12 +477,8 @@ function updateEntry(){
 /* ---------- DELETE ---------- */
 function openDelete(i){
   deleteIndex = i;
-  deleteId = view[i].id; // store backend id
-  if(confirm("Delete this entry?")){
-    confirmDelete();
-  }
+  document.getElementById("delOverlay").style.display = "flex";
 }
-
 
 function closeDelete(){
   document.getElementById("delOverlay").style.display = "none";
@@ -494,22 +487,14 @@ function closeDelete(){
 function confirmDelete(){
   const record = view[deleteIndex];
 
-  // 🔴 send delete to backend
-  const fd = new FormData();
-  fd.append("action","delete");
-  fd.append("id", record.id);
-
-  fetch(URL,{method:"POST",mode:"no-cors",body:fd});
-
-  // 🟢 frontend delete
-  all = all.filter(r => r.id !== record.id);
-  view = view.filter(r => r.id !== record.id);
+  all = all.filter(r => r !== record);
+  view.splice(deleteIndex,1);
 
   render();
   calcCards();
+  closeDelete();
   toastMsg("🗑️ Entry deleted successfully");
 }
-
 
 function logout(){
   if(!confirm("Do you want to logout?")) return;
@@ -528,8 +513,6 @@ function logout(){
 
 </body>
 </html>
-
-
 
 
 
