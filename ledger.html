@@ -410,24 +410,37 @@ cBalance.innerText="₹"+(cre-deb);
 }
 
 function render(){
-tbody.innerHTML="";
-const start=(page-1)*perPage;
-view.slice(start,start+perPage).forEach((r,i)=>{
-tbody.innerHTML+=`
-<tr>
-<td>${start+i+1}</td>
-<td>${r.date}</td><td>${r.item}</td><td>${r.qty}</td>
-<td>${r.cashOff}</td><td>${r.cashOn}</td>
-<td>${r.debit}</td><td>${r.credit}</td><td>${r.profit}</td>
-<td>
-<button class="btn-edit" onclick="openEdit(${start+i})">✏️</button>
-<button class="btn-del" onclick="openDelete(${start+i})">🗑️</button>
+  tbody.innerHTML="";
+  const start=(page-1)*perPage;
 
-</td>
-</tr>`;
-});
-pageInfo.innerText=`Page ${page} / ${Math.ceil(view.length/perPage)||1}`;
+  view.slice(start,start+perPage).forEach((r,i)=>{
+    tbody.innerHTML+=`
+    <tr>
+      <td>${start+i+1}</td>
+      <td>${r.date}</td>
+      <td>${r.item}</td>
+      <td>${r.qty}</td>
+
+      <!-- ✅ DESCRIPTION -->
+      <td style="max-width:220px;white-space:normal;word-break:break-word;">
+        ${r.desc || ""}
+      </td>
+
+      <td>${r.cashOff}</td>
+      <td>${r.cashOn}</td>
+      <td>${r.debit}</td>
+      <td>${r.credit}</td>
+      <td>${r.profit}</td>
+      <td>
+        <button class="btn-edit" onclick="openEdit(${start+i})">✏️</button>
+        <button class="btn-del" onclick="openDelete(${start+i})">🗑️</button>
+      </td>
+    </tr>`;
+  });
+
+  pageInfo.innerText=`Page ${page} / ${Math.ceil(view.length/perPage)||1}`;
 }
+
 
 function nextPage(){if(page*perPage<view.length){page++;render();}}
 function prevPage(){if(page>1){page--;render();}}
@@ -520,6 +533,7 @@ function logout(){
 
 </body>
 </html>
+
 
 
 
