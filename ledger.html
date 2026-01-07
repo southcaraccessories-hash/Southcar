@@ -134,6 +134,84 @@ th{background:#f8fafc;text-transform:uppercase}
 }
 
 
+  /* ========================= */
+/* 📱 MOBILE RESPONSIVENESS */
+/* ========================= */
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+
+/* Make table scrollable on mobile */
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  min-width:760px; /* keeps laptop look, allows scroll on mobile */
+}
+
+/* Touch friendly buttons */
+button{
+  min-height:42px;
+}
+
+/* Mobile-specific layout */
+@media(max-width:768px){
+
+  h2{
+    font-size:18px;
+  }
+
+  marquee{
+    font-size:13px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  input, textarea{
+    font-size:15px;
+    padding:12px;
+  }
+
+  .summary{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .summary .card p{
+    font-size:18px;
+  }
+
+  th, td{
+    font-size:12px;
+    padding:6px;
+  }
+
+  /* Hide less important columns on mobile */
+  th:nth-child(6),
+  td:nth-child(6),
+  th:nth-child(9),
+  td:nth-child(9){
+    display:none;
+  }
+}
+
+/* Extra small phones */
+@media(max-width:420px){
+  .summary{
+    grid-template-columns:1fr;
+  }
+
+  .topbar .brand span{
+    display:none; /* only 🚗 icon */
+  }
+}
+
+
 </style>
 </head>
 
@@ -189,7 +267,7 @@ th{background:#f8fafc;text-transform:uppercase}
 </div>
 
 <!-- 📋 TABLE -->
-<div class="card">
+<div class="card table-wrap">
 <table>
 <thead>
 <tr>
@@ -411,6 +489,7 @@ function logout(){
 
 </body>
 </html>
+
 
 
 
