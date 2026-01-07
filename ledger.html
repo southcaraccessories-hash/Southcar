@@ -210,6 +210,25 @@ button{
     display:none; /* only 🚗 icon */
   }
 }
+.notice{
+  text-align:center;
+  font-weight:700;
+  font-size:14px;
+  color:#dc2626; /* red */
+  margin:10px 0;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:0.2}
+}
+.blink-text{
+  color:#dc2626;
+  font-weight:700;
+  font-size:14px;
+  animation: blink 1s infinite;
+}
 
 
 </style>
@@ -224,10 +243,15 @@ button{
   </div>
   <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
-
   
-<h2> South Car Accessories</h2>
-<marquee>Enter Correct Data Here</marquee>
+<div class="notice">
+  ⚠️ Enter Correct Data Here Daily
+</div>
+  <marquee class="blink-text">
+  ⚠️ Enter Correct Data Here Daily
+</marquee>
+
+
 <!-- 🔍 DATE RANGE FILTER -->
 <div class="card">
 <div class="grid">
@@ -489,6 +513,7 @@ function logout(){
 
 </body>
 </html>
+
 
 
 
