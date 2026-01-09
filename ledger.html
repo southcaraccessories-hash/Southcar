@@ -246,7 +246,7 @@ table td{
 <!-- 🔓 TOP BAR -->
 <div class="topbar">
   <div class="brand">
-    🚗 South Car Accessories
+    South Car Accessories
   </div>
   <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
@@ -373,14 +373,17 @@ load();
 }
 
 function load(){
-fetch(URL).then(r=>r.json()).then(d=>{
-all=d.reverse();
-view=[...all];
-page=1;
-render();
-calcCards();
-});
+  fetch(URL)
+    .then(r => r.json())
+    .then(d => {
+      all = d.sort((a,b) => new Date(b.date) - new Date(a.date)); // NEWEST FIRST
+      view = [...all];
+      page = 1;
+      render();
+      calcCards();
+    });
 }
+
 
 function applyRange(){
 const f=new Date(fromDate.value);
@@ -424,7 +427,7 @@ function render(){
     tbody.innerHTML+=`
     <tr>
       <td>${start+i+1}</td>
-      <td>${r.date}</td>
+      <td>${formatDateDMY(r.date)}</td>
       <td>${r.item}</td>
       <td>${r.qty}</td>
 
@@ -535,11 +538,48 @@ function logout(){
   // redirect to login page
   window.location.href = "login.html";
 }
+function formatDateDMY(d){
+  if(!d) return "";
+  const date = new Date(d);
+  if(isNaN(date)) return d;
+
+  const dd = String(date.getDate()).padStart(2,"0");
+  const mm = String(date.getMonth()+1).padStart(2,"0");
+  const yyyy = date.getFullYear();
+
+  return `${dd}-${mm}-${yyyy}`;
+}
+
+  /* ===============================
+   AUTO LOGOUT ON INACTIVITY
+================================ */
+
+let inactivityTimer;
+const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
+
+function resetInactivityTimer(){
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(autoLogout, INACTIVITY_LIMIT);
+}
+
+function autoLogout(){
+  alert("Session expired due to inactivity");
+  logout();
+}
+
+// Detect user activity
+["click","mousemove","keydown","scroll","touchstart"].forEach(evt => {
+  document.addEventListener(evt, resetInactivityTimer, true);
+});
+
+// Start timer on page load
+resetInactivityTimer();
 
 </script>
 
 </body>
 </html>
+
 
 
 
