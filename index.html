@@ -329,7 +329,7 @@ playSoftChime();
 const interval = setInterval(() => {
     time--;
     timer.textContent = time;
-    circle.style.strokeDashoffset = total - (time / 5) * total;
+    circle.style.strokeDashoffset = total - (time / 2) * total;
 
     if (time <= 0) {
         clearInterval(interval);
@@ -459,4 +459,5 @@ Address: ${address}`;
 
 </body>
 </html>
+
 
