@@ -567,11 +567,14 @@ function confirmDelete(){
 function logout(){
   if(!confirm("Do you want to logout?")) return;
 
-  localStorage.removeItem("sca_logged_in");
+  // clear session
+  localStorage.clear();
   sessionStorage.clear();
 
+  // redirect to login page
   window.location.href = "login.html";
 }
+
 
 function formatDateDMY(d){
   if(!d) return "";
@@ -614,6 +617,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
