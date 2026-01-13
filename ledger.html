@@ -361,6 +361,16 @@ table td{
 <div class="toast" id="toast"></div>
 
 <script>
+/* 🔐 LOGIN GUARD — BLOCK DIRECT ACCESS */
+if (localStorage.getItem("sca_logged_in") !== "yes") {
+  window.location.replace("login.html");
+}
+</script>
+
+
+  
+<script>
+
 const URL="https://script.google.com/macros/s/AKfycbx-b6qM9NZslNYBk3LXqj7wrvKOERmXtXtWkwxALmZE9JPpnObg7nUdmG33Qufb9Z5w/exec";
 
 let all=[],view=[],page=1,perPage=10;
@@ -563,13 +573,12 @@ function confirmDelete(){
 function logout(){
   if(!confirm("Do you want to logout?")) return;
 
-  // clear session
-  localStorage.clear();
+  localStorage.removeItem("sca_logged_in");
   sessionStorage.clear();
 
-  // redirect to login page
   window.location.href = "login.html";
 }
+
 function formatDateDMY(d){
   if(!d) return "";
   const date = new Date(d);
@@ -611,6 +620,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
