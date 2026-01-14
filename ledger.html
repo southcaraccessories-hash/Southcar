@@ -5,48 +5,6 @@
 <title>South Car Accessories</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-/*<script>
-/* =========================================
-   🔐 LOGIN GUARD + AUTO LOGOUT (ALL-IN-ONE)
-   WORKS ON GITHUB PAGES
-========================================= */
-
-(function () {
-
-  /* ---------- LOGIN PROTECTION ---------- */
-  if (localStorage.getItem("sca_logged_in") !== "yes") {
-    window.location.href = "./login.html";
-    return;
-  }
-
-  /* ---------- LOGOUT FUNCTION ---------- */
-  window.logout = function () {
-    localStorage.removeItem("sca_logged_in");
-    sessionStorage.clear();
-    window.location.href = "./login.html";
-  };
-
-  /* ---------- AUTO LOGOUT ON INACTIVITY ---------- */
-  let inactivityTimer;
-  const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
-
-  function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      alert("Session expired due to inactivity");
-      logout();
-    }, INACTIVITY_LIMIT);
-  }
-
-  ["click", "mousemove", "keydown", "scroll", "touchstart"].forEach(evt => {
-    document.addEventListener(evt, resetInactivityTimer, true);
-  });
-
-  resetInactivityTimer();
-
-})();
-</script> */
-
   
 <style>
 :root{
@@ -624,6 +582,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
