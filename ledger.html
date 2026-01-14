@@ -66,7 +66,6 @@ body{
 }
 
 /* CARDS */
-/* BEAUTIFUL CARDS */
 .card{
   background:#fff;
   padding:16px;
@@ -74,30 +73,6 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.12);
   margin-bottom:16px;
 }
-
-/* subtle gradient border effect */
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:20px;
-  padding:1px;
-  background: linear-gradient(135deg,#2563eb,#22c55e);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-}
-
-/* hover animation */
-.card:hover{
-  transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 25px 45px rgba(0,0,0,0.12),
-    0 10px 20px rgba(0,0,0,0.08);
-}
-
 
 .grid{
   display:grid;
@@ -354,14 +329,6 @@ table td{
 <div class="toast" id="toast"></div>
 
 <script>
-
-/* 🔐 LOGIN GUARD — BLOCK DIRECT ACCESS */
-  /*
-if (localStorage.getItem("sca_logged_in") !== "yes") {
-  window.location.replace("login.html");
-}
-
-  */
 const URL="https://script.google.com/macros/s/AKfycbx-b6qM9NZslNYBk3LXqj7wrvKOERmXtXtWkwxALmZE9JPpnObg7nUdmG33Qufb9Z5w/exec";
 
 let all=[],view=[],page=1,perPage=10;
@@ -571,8 +538,6 @@ function logout(){
   // redirect to login page
   window.location.href = "login.html";
 }
-
-
 function formatDateDMY(d){
   if(!d) return "";
   const date = new Date(d);
@@ -589,7 +554,7 @@ function formatDateDMY(d){
    AUTO LOGOUT ON INACTIVITY
 ================================ */
 
-/* let inactivityTimer;
+let inactivityTimer;
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
 
 function resetInactivityTimer(){
@@ -608,23 +573,12 @@ function autoLogout(){
 });
 
 // Start timer on page load
-resetInactivityTimer(); 
-*/
+resetInactivityTimer();
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
