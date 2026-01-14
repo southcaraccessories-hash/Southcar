@@ -298,6 +298,17 @@ table td{
 <button onclick="save()">💾 Save Entry</button>
 </div>
 
+<!-- 🔍 TABLE SEARCH -->
+<div class="card">
+  <input
+    type="text"
+    id="tableSearch"
+    placeholder="🔍 Search item, date, description, amount..."
+    onkeyup="searchTable()"
+  >
+</div>
+
+  
 <!-- 📋 TABLE -->
 <div class="card table-wrap">
 <table>
@@ -387,7 +398,21 @@ function load(){
     });
 }
 
+function searchTable(){
+  const q = document.getElementById("tableSearch").value.toLowerCase();
 
+  view = all.filter(r =>
+    Object.values(r).some(v =>
+      String(v).toLowerCase().includes(q)
+    )
+  );
+
+  page = 1;
+  render();
+  calcCards();
+}
+
+  
 function applyRange(){
 const f=new Date(fromDate.value);
 const t=new Date(toDate.value);
@@ -582,6 +607,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
