@@ -327,6 +327,13 @@ table td{
 </div>
 
 <div class="toast" id="toast"></div>
+  
+<script>
+/* 🔐 LOGIN GUARD — BLOCK DIRECT ACCESS */
+if (localStorage.getItem("sca_logged_in") !== "yes") {
+  window.location.replace("login.html");
+}
+</script>
 
 <script>
 const URL="https://script.google.com/macros/s/AKfycbx-b6qM9NZslNYBk3LXqj7wrvKOERmXtXtWkwxALmZE9JPpnObg7nUdmG33Qufb9Z5w/exec";
@@ -579,6 +586,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
