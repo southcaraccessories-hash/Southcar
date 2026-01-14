@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <title>South Car Accessories</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  
+  <script>
+/* 🔐 LOGIN GUARD — BLOCK DIRECT ACCESS */
+if (localStorage.getItem("sca_logged_in") !== "yes") {
+  window.location.replace("login.html");
+}
+  </script>
+  
 <style>
 :root{
   --bg:#f1f5f9;
@@ -329,10 +336,7 @@ table td{
 <div class="toast" id="toast"></div>
   
 <script>
-/* 🔐 LOGIN GUARD — BLOCK DIRECT ACCESS */
-if (localStorage.getItem("sca_logged_in") !== "yes") {
-  window.location.replace("login.html");
-}
+
 
 const URL="https://script.google.com/macros/s/AKfycbx-b6qM9NZslNYBk3LXqj7wrvKOERmXtXtWkwxALmZE9JPpnObg7nUdmG33Qufb9Z5w/exec";
 
@@ -584,6 +588,7 @@ resetInactivityTimer();
 
 </body>
 </html>
+
 
 
 
